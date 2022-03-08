@@ -17,7 +17,7 @@ router.get("/restaurant/:id", (req, res) => {
     .populate("menu")
     .populate("tables")
     .then((response) => res.json(response))
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
 });
 
 //GET TABLE
@@ -220,10 +220,8 @@ router.post("/update-total", (req, res) => {
   const { id } = req.body;
   const order = req.body;
 
-  console.log(id, order)
-
   Table.findOneAndUpdate(id[0], { total: order })
-    .then((result) => res.redirect('back'))
+    .then((result) => res.status(201).json({ result }))
     .catch((err) => console.log(err))
 });
 
