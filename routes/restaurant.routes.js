@@ -219,12 +219,12 @@ router.post("/update-total", (req, res) => {
   
   const { id } = req.body;
   const order = req.body;
-console.log({order}, "heyyy ---------------------->>>>>>>")
-  console.log(req.body, 'de update total')
 
-  Table.findOneAndUpdate(id, { total: order })
-    .then((result) => res.status(201).json({ result }))
-    .catch((err) => console.log(err));
+  console.log(id, order)
+
+  Table.findOneAndUpdate(id[0], { total: order })
+    .then((result) => res.redirect('back'))
+    .catch((err) => console.log(err))
 });
 
 module.exports = router;
