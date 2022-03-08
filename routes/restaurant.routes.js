@@ -20,12 +20,20 @@ router.get("/restaurant/:id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+//GET TABLE
+
 router.get("/table/:tableId", (req, res, next) => {
   const { tableId } = req.params;
 
-  Table.findById(tableId).then((table) => {
-    res.json(table);
-  }).catch = (err) => console.log(err);
+  Table
+    .findById(tableId)
+    .populate({
+      path:'restaurantId',
+        populate : {
+          path:'menu'
+        }})
+    .then((table) => {res.json(table)})
+    .catch = (err) => console.log(err);
 });
 
 //Create Restaurant
