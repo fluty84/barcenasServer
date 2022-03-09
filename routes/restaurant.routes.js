@@ -17,7 +17,8 @@ router.get("/restaurant/:id", (req, res) => {
     .populate("menu")
     .populate("tables")
     .then((response) => res.json(response))
-    .catch((err) => console.log(err))
+    .catch((err) => res.status(500).json(err))
+
 });
 
 //GET TABLE
@@ -28,12 +29,14 @@ router.get("/table/:tableId", (req, res, next) => {
   Table
     .findById(tableId)
     .populate({
-      path:'restaurantId',
-        populate : {
-          path:'menu'
-        }})
-    .then((table) => {res.json(table)})
-    .catch = (err) => console.log(err);
+      path: 'restaurantId',
+      populate: {
+        path: 'menu'
+      }
+    })
+    .then((table) => { res.json(table) })
+    .catch((err) => res.status(500).json(err))
+
 });
 
 //Create Restaurant
@@ -60,7 +63,8 @@ router.post("/create", (req, res) => {
     return;
   }
 
-  Restaurant.findOne({ restaurant })
+  Restaurant
+    .findOne({ restaurant })
     .then((foundUser) => {
       if (foundUser) {
         res.status(400).json({ message: "User already exists." });
@@ -88,7 +92,6 @@ router.post("/create", (req, res) => {
       res.status(201).json({ user });
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).json({ message: "Internal Server Error" });
     });
 });
@@ -98,15 +101,16 @@ router.post("/create", (req, res) => {
 router.post("/create-product", (req, res) => {
   const { name, price, category, allergens, restaurantId, imageUrl } = req.body;
 
-  Product.create({ name, price, category, allergens, restaurantId, imageUrl })
+  Product
+    .create({ name, price, category, allergens, restaurantId, imageUrl })
     .then((product) => {
       return Restaurant.findByIdAndUpdate(restaurantId, {
         $push: { menu: product },
       });
     })
-
     .then((result) => res.status(201).json({ result }))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json(err))
+
 });
 
 // Delete Product
@@ -114,10 +118,11 @@ router.post("/create-product", (req, res) => {
 router.delete("/delete-product", (req, res) => {
   const { _id } = req.body;
 
-  Product.findByIdAndDelete(_id)
-    .then(() => console.log("deleted"))
+  Product
+    .findByIdAndDelete(_id)
     .then((result) => res.status(201).json({ result }))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json(err))
+
 });
 
 // create table
@@ -127,14 +132,16 @@ router.post("/create-table", isAuthenticated, (req, res) => {
 
   const restaurantId = req.payload._id;
 
-  Table.create({ restaurantId })
+  Table
+    .create({ restaurantId })
     .then((table) => {
       return Restaurant.findByIdAndUpdate(restaurantId, {
         $push: { tables: table },
       });
     })
     .then((result) => res.status(201).json({ result }))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json(err))
+
 });
 
 // create order
@@ -142,20 +149,21 @@ router.post("/create-table", isAuthenticated, (req, res) => {
 router.post("/send-order", (req, res) => {
   const { tableId, order } = req.body;
 
-  console.log(order);
+
   Table.findByIdAndUpdate(tableId, { $push: { currentOrder: order } })
     .then((result) => res.status(201).json({ result }))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json(err))
+
 });
 
 //display order
 
 router.get("/:tableId/display-order", (req, res) => {
-  console.log(req.params);
 
   Table.findById(req.params.tableId)
     .then((result) => res.status(201).json({ result }))
-    .catch((e) => console.log(e));
+    .catch((err) => res.status(500).json(err))
+
 });
 
 // edit order
@@ -165,9 +173,10 @@ router.put("/edit-order", (req, res) => {
   const order = req.body;
 
   Table.findByIdAndUpdate(id, { currentOrder: order })
-    .then(() => console.log(req.body))
+
     .then((result) => res.status(201).json({ result }))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json(err))
+
 });
 
 // accept order
@@ -183,21 +192,21 @@ router.post("/accept-order", (req, res) => {
       });
     })
     .then((result) => res.status(201).json({ result }))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json(err))
+
 });
 
 // delete order
 
 router.post("/delete-order", (req, res) => {
   const { id } = req.body;
-  console.log("estoy en delete order y id de la mesa es", req.body);
+
 
   Table.findByIdAndUpdate(id, { currentOrder: [] })
-    .then((elm) => {
-      console.log("deleted: ", elm);
-    })
+
     .then((result) => res.status(201).json({ result }))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json(err))
+
 });
 
 // delete total
@@ -206,23 +215,23 @@ router.delete("/delete-total", (req, res) => {
   const { id } = req.body;
 
   Table.findByIdAndUpdate(id, { total: [] })
-    .then((elm) => {
-      console.log("deleted: ", elm);
-    })
+
     .then((result) => res.status(201).json({ result }))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json(err))
+
 });
 
 //Update total
 
 router.post("/update-total", (req, res) => {
-  
+
   const { id } = req.body;
   const order = req.body;
 
   Table.findOneAndUpdate(id[0], { total: order })
-    .then((result) => res.status(201).json({ result }))
-    .catch((err) => console.log(err))
+    .then((result) => res.redirect('back'))
+    .catch((err) => res.status(500).json(err))
+
 });
 
 module.exports = router;
