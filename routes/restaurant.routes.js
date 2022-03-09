@@ -223,13 +223,14 @@ router.delete("/delete-total", (req, res) => {
 
 //Update total
 
-router.post("/update-total", (req, res) => {
+router.post("/update-total/:restaurantId", (req, res) => {
 
   const { id } = req.body;
   const order = req.body;
+  const { restaurantId } = req.params
 
   Table.findOneAndUpdate(id[0], { total: order })
-    .then((result) => res.redirect('back'))
+    .then((result) => res.redirect(`http://localhost:3000/${restaurantId}/${id[0]}/check-out`)) //cambia en deploy
     .catch((err) => res.status(500).json(err))
 
 });
