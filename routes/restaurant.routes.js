@@ -147,10 +147,10 @@ router.post("/create-table", isAuthenticated, (req, res) => {
 // create order
 
 router.post("/send-order", (req, res) => {
-  const { tableId, order } = req.body;
+  const { order } = req.body;
+  const {id} = order //TABLEID
 
-
-  Table.findByIdAndUpdate(tableId, { $push: { currentOrder: order } })
+  Table.findByIdAndUpdate(id, { $push: { currentOrder: order } })
     .then((result) => res.status(201).json({ result }))
     .catch((err) => res.status(500).json(err))
 
