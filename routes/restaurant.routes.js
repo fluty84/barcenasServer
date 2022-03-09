@@ -31,7 +31,7 @@ router.get("/table/:tableId", (req, res, next) => {
     .populate({
       path: 'restaurantId',
       populate: {
-        path: 'menu'
+      path: 'menu'
       }
     })
     .then((table) => { res.json(table) })
@@ -151,6 +151,20 @@ router.post("/send-order", (req, res) => {
   const {id} = order //TABLEID
 
   Table.findByIdAndUpdate(id, { $push: { currentOrder: order } })
+    .then((result) => res.status(201).json({ result }))
+    .catch((err) => res.status(500).json(err))
+
+});
+
+//
+router.post("/reset-table", (req, res) => {
+
+  const { order } = req.body;
+  const {id} = order //TABLEID
+
+  console.log(id)
+
+  Table.findByIdAndUpdate(id,  { currentOrder: [{}], total: [{}], password: "", customer: "" } )
     .then((result) => res.status(201).json({ result }))
     .catch((err) => res.status(500).json(err))
 
