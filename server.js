@@ -12,15 +12,15 @@ const io = new Server(socketServer, {
   },
 })
 
-io.on("connection", (socket) => {
-  console.log("a user connected", socket.id);
+// io.on("connection", (socket) => {
+//   console.log("a user connected", socket.id);
 
-  socket.on('join_room', (data) => {
-    socket.join(data)
-    io.emit('join_room',  data); // This will emit the event to all connected sockets
-  })
+//   socket.on('join_room', (data) => {
+//     socket.join(data)
+//     io.emit('join_room',  data); // This will emit the event to all connected sockets
+//   })
 
-})
+// })
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
