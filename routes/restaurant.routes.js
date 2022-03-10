@@ -246,7 +246,7 @@ router.post("/update-total/:restaurantId", (req, res) => {
   const { restaurantId } = req.params
 
   Table.findOneAndUpdate(id[0], { total: order })
-    .then((result) => res.redirect(`http://localhost:3000/${restaurantId}/${id[0]}/check-out`)) //cambia en deploy
+    .then((result) => res.redirect(`https://waiterhack.netlify.app/restaurante/${restaurantId}/${id[0]}/check-out`)) //cambia en deploy
     .catch((err) => res.status(500).json(err))
 
 });
