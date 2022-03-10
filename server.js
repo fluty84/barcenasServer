@@ -28,6 +28,6 @@ app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 })
 
-socketServer.listen(80, () => {
-  console.log(`Sockets on port ${PORT}`);
-})
+// socketServer.listen(PORT, () => {
+//   console.log(`Sockets on port ${PORT}`);
+// })
