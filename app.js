@@ -13,6 +13,4 @@ app.use("/api", allRoutes);
 
 require("./error-handling")(app);
 
-console.log('---- EL ORIGEN ES -----', process.env.ORIGIN)
-
 module.exports = app

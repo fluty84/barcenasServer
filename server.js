@@ -25,9 +25,9 @@ io.on("connection", (socket) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`Server listening on port http://localhost:${PORT}`);
+  console.log(`Server listening on port ${PORT}`);
 })
 
 socketServer.listen(PORT, () => {
-  console.log(`Server Socket listening on port 80`);
+  console.log(`Sockets on port ${PORT}`);
 })
