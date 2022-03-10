@@ -19,15 +19,15 @@ io.on("connection", (socket) => {
   socket.on('join_room', (data) => {
   
     socket.join(data)
-    console.log(data, socket.id, 'paso por el server')
+   
     io.emit('join_room',  data); // This will emit the event to all connected sockets
   })
   
 })
 
 
-server.listen(3001, () => {
-  console.log(`Server Socket listening on port 3001`);
+server.listen(80, () => {
+  console.log(`Server Socket listening on port 80`);
 });
 
 app.listen(PORT, () => {
