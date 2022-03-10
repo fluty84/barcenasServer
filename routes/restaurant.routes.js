@@ -159,12 +159,11 @@ router.post("/send-order", (req, res) => {
 //
 router.post("/reset-table", (req, res) => {
 
-  const { order } = req.body;
-  const {id} = order //TABLEID
 
-  console.log(id)
+  const {tableId} = req.body //TABLEID
 
-  Table.findByIdAndUpdate(id,  { currentOrder: [{}], total: [{}], password: "", customer: "" } )
+
+  Table.findByIdAndUpdate(tableId,  { currentOrder: [], total: [], password: null, customer: null } )
     .then((result) => res.status(201).json({ result }))
     .catch((err) => res.status(500).json(err))
 
