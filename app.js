@@ -13,7 +13,7 @@ app.use("/api", allRoutes);
 
 require("./error-handling")(app);
 
-ar cors = require('cors')
+const cors = require('cors')
 
 app.use(cors())
 
