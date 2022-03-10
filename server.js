@@ -4,25 +4,25 @@ const PORT = process.env.PORT || 5005;
 const http = require("http");
 const socketServer = http.createServer(app);
 const { Server } = require("socket.io");
-// const io = new Server(socketServer, {
-//   cors: {
-//     origin: process.env.ORIGIN || "https://waiterhack.herokuapp.com",
-//     //"http://localhost:3000" local,
-//     methods: ["GET", "POST"],
-//   },
-// })
+const io = new Server(socketServer, {
+  cors: {
+    origin: process.env.ORIGIN || "https://waiterhack.herokuapp.com",
+    //"http://localhost:3000" local,
+    methods: ["GET", "POST"],
+  },
+})
 
-// io.on("connection", (socket) => {
-//   console.log("a user connected", socket.id);
+io.on("connection", (socket) => {
+  console.log("a user connected", socket.id);
 
-//   socket.on('join_room', (data) => {
+  socket.on('join_room', (data) => {
 
-//     socket.join(data)
+    socket.join(data)
 
-//     io.emit('join_room', data); // This will emit the event to all connected sockets
-//   })
+    io.emit('join_room', data); // This will emit the event to all connected sockets
+  })
 
-// })
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
