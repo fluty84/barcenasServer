@@ -2,9 +2,9 @@ const app = require("./app");
 const PORT = process.env.PORT || 5005;
 
 const http = require("http");
-const server = http.createServer(app);
+const socketServer = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server, {
+const io = new Server(socketServer, {
   cors: {
     origin: process.env.ORIGIN || "https://waiterhack.herokuapp.com",
     //"http://localhost:3000" local,
@@ -24,10 +24,10 @@ io.on("connection", (socket) => {
 
 })
 
-server.listen(PORT, () => {
-  console.log(`Server Socket listening on port 80`);
-});
-
 app.listen(PORT, () => {
   console.log(`Server listening on port http://localhost:${PORT}`);
+})
+
+socketServer.listen(PORT, () => {
+  console.log(`Server Socket listening on port 80`);
 })
