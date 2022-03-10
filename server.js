@@ -5,7 +5,12 @@ const server = app.listen(PORT, () => {
   console.log("Listening on port: " + PORT);
 })
 
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: process.env.ORIGIN || "https://waiterhack.herokuapp.com",
+    methods: ["GET", "POST"]
+  },
+})
 
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);
