@@ -12,9 +12,10 @@ const io = new Server(socketServer, {
   },
 })
 
-io.on("connection", (socket) => {
-  console.log("a user connected", socket.id);
+// io.on("connection", (socket) => {
+//   console.log("a user connected", socket.id);
 
+<<<<<<< HEAD
   socket.on('join_room', (data) => {
     socket.join(data)
     io.emit('join_room',  data); // This will emit the event to all connected sockets
@@ -26,6 +27,14 @@ io.on("connection", (socket) => {
 // Server.listen(3001, () => {
 //   console.log(`Server Socket listening on port 80`);
 // });
+=======
+//   socket.on('join_room', (data) => {
+//     socket.join(data)
+//     io.emit('join_room',  data); // This will emit the event to all connected sockets
+//   })
+
+// })
+>>>>>>> 3945827416239605fe0ff7a81dd5bc1fbf6548f8
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
