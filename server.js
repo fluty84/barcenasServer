@@ -17,16 +17,14 @@ io.on("connection", (socket) => {
   console.log("a user connected", socket.id);
   
   socket.on('join_room', (data) => {
-  
     socket.join(data)
-   
     io.emit('join_room',  data); // This will emit the event to all connected sockets
   })
   
 })
 
 
-server.listen(80, () => {
+server.listen(3001, () => {
   console.log(`Server Socket listening on port 80`);
 });
 
