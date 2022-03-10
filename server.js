@@ -8,7 +8,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: process.env.ORIGIN || "https://waiterhack.herokuapp.com",
+    origin: process.env.ORIGIN || "http://localhost:3000",
     //"http://localhost:3000" local,
     methods: ["GET", "POST"],
   },
@@ -26,7 +26,7 @@ io.on("connection", (socket) => {
   
 })
 
-server.listen(PORT, () => {
+server.listen(80, () => {
   console.log(`Server Socket listening on port 80`);
 });
 
