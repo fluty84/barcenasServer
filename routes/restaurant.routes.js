@@ -118,7 +118,7 @@ router.post("/create-product", (req, res) => {
 
 // Delete Product
 
-router.delete("/delete-product", (req, res) => {
+router.post("/delete-product", (req, res) => {
   const { _id } = req.body;
 
   Product
